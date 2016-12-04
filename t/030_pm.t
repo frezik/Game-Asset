@@ -21,9 +21,7 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 # POSSIBILITY OF SUCH DAMAGE.
-use Test::More 
-    skip_all => "Build PM";
-    #tests => 3;
+use Test::More tests => 3;
 use strict;
 use warnings;
 use Game::Asset;
@@ -36,8 +34,8 @@ my $asset = Game::Asset->new({
 my $bar = $asset->get_by_name( 'bar' );
 isa_ok( $bar => 'Game::Asset::PerlModule' );
 
-eval { $bar->load };
-ok(! $@, "Loaded pm file" );
+my $pack = $bar->package;
+cmp_ok( $pack, 'eq', 'Game::Asset::TestPack', "Package set" );
 
 my $obj = Game::Asset::TestPack->new;
 isa_ok( $obj => 'Game::Asset::TestPack' );

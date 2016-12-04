@@ -33,10 +33,22 @@ use constant type => 'pm';
 
 with 'Game::Asset::Type';
 
+has 'package' => (
+    is => 'ro',
+    isa => 'Str',
+    writer => '_set_package',
+);
+
 
 sub _process_content
 {
-    # TODO
+    my ($self, $pm_text) = @_;
+
+    my $pack = eval $pm_text;
+    die $@ if $@;
+
+    $self->_set_package( $pack );
+    return;
 }
 
 
