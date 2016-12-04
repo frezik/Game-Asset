@@ -34,6 +34,12 @@ use constant type => 'yml';
 with 'Game::Asset::Type';
 
 
+sub _process_content
+{
+    # TODO
+}
+
+
 no Moose;
 __PACKAGE__->meta->make_immutable;
 1;

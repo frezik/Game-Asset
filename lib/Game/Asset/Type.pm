@@ -29,12 +29,40 @@ use Moose::Role;
 
 
 requires 'type';
+requires '_process_content';
 
 has 'name' => (
     is => 'ro',
     isa => 'Str',
     required => 1,
 );
+has 'full_name' => (
+    is => 'ro',
+    isa => 'Str',
+    required => 1,
+);
+has 'has_been_processed' => (
+    traits => ['Bool'],
+    is => 'ro',
+    isa => 'Bool',
+    handles => {
+        '_set_has_been_processed' => 'set',
+    },
+);
+has '_orig_content' => (
+    is => 'rw',
+    isa => 'Str',
+);
+
+
+sub process_content
+{
+    my ($self, $content) = @_;
+    return if $self->has_been_processed;
+    $self->_process_content( $content );
+    $self->_set_has_been_processed;
+    return;
+}
 
 
 1;

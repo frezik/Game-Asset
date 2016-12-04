@@ -62,7 +62,7 @@ has '_entries_by_shortname' => (
     isa => 'HashRef[Game::Asset::Type]',
     default => sub {{}},
     handles => {
-        get_by_name => 'get',
+        _get_by_name => 'get',
     },
 );
 has '_zip' => (
@@ -94,6 +94,22 @@ sub BUILDARGS
 
     return $args;
 }
+
+
+sub get_by_name
+{
+    my ($self, $name) = @_;
+    my $entry = $self->_get_by_name( $name );
+
+    if( $entry ) {
+        my $full_name = $entry->full_name;
+        my $contents = $self->_zip->contents( $full_name );
+        $entry->process_content( $contents );
+    }
+
+    return $entry;
+}
+
 
 sub _read_zip
 {
@@ -142,6 +158,7 @@ sub _build_entries
         my $entry_class = $mappings{$ext};
         my $entry = $entry_class->new({
             name => $short_name,
+            full_name => $member,
         });
         push @entries, $entry;
         $entries_by_shortname{$short_name} = $entry;

@@ -34,6 +34,16 @@ use constant type => 'txt';
 with 'Game::Asset::Type';
 
 
+sub content { $_[0]->_orig_content }
+
+sub _process_content
+{
+    my ($self, $content) = @_;
+    $self->_orig_content( $content );
+    return;
+}
+
+
 no Moose;
 __PACKAGE__->meta->make_immutable;
 1;

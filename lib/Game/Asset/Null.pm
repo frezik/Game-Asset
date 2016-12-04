@@ -32,6 +32,11 @@ use constant type => 'null';
 
 with 'Game::Asset::Type';
 
+sub _process_content
+{
+    # Do nothing, and do it well
+}
+
 
 no Moose;
 __PACKAGE__->meta->make_immutable;

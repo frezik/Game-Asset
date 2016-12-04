@@ -22,8 +22,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 # POSSIBILITY OF SUCH DAMAGE.
 use Test::More 
-    skip_all => 'Implement TXT';
-    #tests => 2;
+    tests => 2;
 use strict;
 use warnings;
 use Game::Asset;
@@ -36,4 +35,4 @@ my $asset = Game::Asset->new({
 my $baz = $asset->get_by_name( 'baz' );
 isa_ok( $baz => 'Game::Asset::PlainText' );
 
-cmp_ok( $baz->content, 'eq', 'Hello, world!', "Got content" );
+cmp_ok( $baz->content, 'eq', "Hello, world!\n", "Got content" );
