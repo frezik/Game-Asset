@@ -27,16 +27,25 @@ use strict;
 use warnings;
 use Moose;
 use namespace::autoclean;
+use YAML ();
 
 
 use constant type => 'yml';
 
 with 'Game::Asset::Type';
 
+has 'data' => (
+    is => 'ro',
+    isa => 'Ref',
+    writer => '_set_data',
+);
 
 sub _process_content
 {
-    # TODO
+    my ($self, $content) = @_;
+    my $data = YAML::Load( $content );
+    $self->_set_data( $data );
+    return;
 }
 
 

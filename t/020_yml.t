@@ -21,9 +21,7 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 # POSSIBILITY OF SUCH DAMAGE.
-use Test::More 
-    skip_all => 'Implement YAML';
-    #tests => 2;
+use Test::More tests => 2;
 use strict;
 use warnings;
 use Game::Asset;
