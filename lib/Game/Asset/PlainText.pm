@@ -49,3 +49,19 @@ __PACKAGE__->meta->make_immutable;
 1;
 __END__
 
+
+=head1 NAME
+
+  Game::Asset::PlainText - A game asset that's just text
+
+=head1 DESCRIPTION
+
+Handles an asset that's boring ol' plain text.
+
+=head1 METHODS
+
+=head2 content
+
+Returns the plaintext content.
+
+=cut

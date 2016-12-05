@@ -54,3 +54,19 @@ __PACKAGE__->meta->make_immutable;
 1;
 __END__
 
+
+=head1 NAME
+
+  Game::Asset::YAML - A game asset that's parsed by YAML into a Perl data structure
+
+=head1 DESCRIPTION
+
+Handles an asset that's formatted in YAML.
+
+=head1 METHODS
+
+=head2 data
+
+Returns the Perl data structure represented by the YAML.
+
+=cut

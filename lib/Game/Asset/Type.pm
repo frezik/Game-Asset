@@ -68,3 +68,49 @@ sub process_content
 1;
 __END__
 
+
+=head1 NAME
+
+  Game::Asset::Type - Role for asset types
+
+=head1 DESCRIPTION
+
+Each file in the asset archive is represented by a class that does this role. 
+Types are determined by L<Game::Asset> using the file extension.
+
+=head1 PROVIDES
+
+=head2 process_content
+
+This is called with the full data. If it's the first time the data was passed, 
+then it calls C<_process_content()> and sets C<has_been_processed()> to true.
+
+=head2 name
+
+The short name (without extension) of the asset.
+
+=head2 full_name
+
+The full name (with extension) of the asset.
+
+=head2 has_been_processed
+
+Boolean. If true, then the asset data has already been passed once to 
+C<process_content()>.
+
+=head2 _orig_content
+
+The C<_process_content()> method should set this to the original, untouched 
+data passed in.
+
+=head1 REQUIRES
+
+=head2 type
+
+Returns the name of the type.
+
+=head2 _process_content
+
+Passed the untouched data so it can be processed.
+
+=cut

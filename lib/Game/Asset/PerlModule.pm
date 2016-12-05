@@ -57,3 +57,32 @@ __PACKAGE__->meta->make_immutable;
 1;
 __END__
 
+
+=head1 NAME
+
+  Game::Asset::PerlModule - A game asset that's a Perl module
+
+=head1 DESCRIPTION
+
+Handles an asset that's a Perl module.
+
+The code in the module is loaded up much like any other Perl module. As with 
+any other Perl module, you should trust the source of the code being loaded.
+
+=head1 WRITING THE MODULE
+
+For the most part, you would write the module code the same as any other module.
+There is only one small change: instead of having C<1;> as your last line to 
+return a true value, you should have C<__PACKAGE__;>.  
+C<Game::Asset::PerlModule> uses this to get the package name of the module.
+
+While it is possible to load multiple packages into a single file, it's 
+recommended to avoid this within C<Game::Asset::PerlModule>.
+
+=head1 METHODS
+
+=head2 package
+
+Returns the name of the package that was loaded.
+
+=cut

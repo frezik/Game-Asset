@@ -46,7 +46,7 @@ has 'file' => (
 );
 has 'mappings' => (
     is => 'ro',
-    isa => 'HashRef[ClassName]',
+    isa => 'HashRef[Game::Asset::Type]',
     default => sub {{}},
     auto_deref => 1,
 );
@@ -174,3 +174,105 @@ __PACKAGE__->meta->make_immutable;
 1;
 __END__
 
+
+=head1 NAME
+
+  Game::Asset - Load assets (images, music, etc.) for games
+
+=head1 SYNOPSIS
+
+    my $asset = Game::Asset->new({
+        file => 't_data/test1.zip',
+    });
+    my $foo = $asset->get_by_name( 'foo' );
+    my $name = $foo->name;
+    my $type = $foo->type;
+
+=head1 DESCRIPTION
+
+A common way to handle game assets is to load them in one big zip file. It 
+might end up named with extensions like ".wad" or ".pk3" or even ".jar", but 
+it's a zip file.
+
+This module allows you to load up these files and fetch their contents into 
+Perl objects. Each type of file is represented by a class that does the 
+L<Game::Asset::Type> Moose role. Which type class, exactly, is determined with 
+mappings defined in the C<index.yml> file. There are also a few built-in 
+mappings.
+
+=head1 THE INDEX FILE
+
+A file named C<index.yml> (a L<YAML> file) is required inside the zip file, 
+and resolves to a hash. Keys are the file extensions (without the dot), and 
+values are the Perl class that will handle that type. That class must do 
+the L<Game::Asset::Type> Moose role.
+
+The file must exist. If you just want to use the built-in mappings, it can 
+resolve to an empty hash.
+
+=head2 Built-in Mappings
+
+The following mappings are always available without being in the index file:
+
+=over 4
+
+=item * txt -- L<Game::Asset::PlainText>
+
+=item * yml -- L<Game::Asset::YAML>
+
+=item * pm -- L<Game::Asset::PerlModule>
+
+=back
+
+=head1 ATTRIBUTES
+
+=head2 file
+
+The path to the zip file.
+
+=head2 mappings
+
+A hashref (with autoderef). The keys are the file extensions, and the values 
+are the L<Game::Asset::Type> classes that will handle that type.
+
+=head2 entries
+
+A list of all the assets with their file extensions removed. Note that the 
+C<index.yml> file is filtered out.
+
+=head1 METHODS
+
+=head2 get_by_name
+
+  $asset->get_by_name( 'foo' );
+
+Pass in a name of an asset (without the extension). Returns an object 
+representing the data in the zip file.
+
+=head1 LICENSE
+
+Copyright (c) 2016  Timm Murray
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without 
+modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, 
+      this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright 
+      notice, this list of conditions and the following disclaimer in the 
+      documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGE.
+
+=cut
