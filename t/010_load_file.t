@@ -21,7 +21,7 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 # POSSIBILITY OF SUCH DAMAGE.
-use Test::More tests => 11;
+use Test::More tests => 12;
 use strict;
 use warnings;
 use Game::Asset;
@@ -45,10 +45,11 @@ cmp_ok( $mappings{nll}, 'eq', 'Game::Asset::Null',
 my @entries = map { $_->[0] }
     sort { $a->[1] cmp $b->[1] }
     map {[ $_, $_->name ]} $asset->entries;
-cmp_ok( scalar @entries, '==', 3, "Correct number of entries" );
+cmp_ok( scalar @entries, '==', 4, "Correct number of entries" );
 cmp_ok( $entries[0]->name, 'eq', 'bar', "Correct first entry" );
 cmp_ok( $entries[1]->name, 'eq', 'baz', "Correct second entry" );
 cmp_ok( $entries[2]->name, 'eq', 'foo', "Correct third entry" );
+cmp_ok( $entries[3]->name, 'eq', 'qux', "Correct fourth entry" );
 
 my $foo = $asset->get_by_name( 'foo' );
 cmp_ok( $foo->name, 'eq', 'foo', "Got asset by name" );

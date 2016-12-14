@@ -34,6 +34,7 @@ use Game::Asset::Null;
 use Game::Asset::PerlModule;
 use Game::Asset::PlainText;
 use Game::Asset::YAML;
+use Game::Asset::MultiExample;
 
 use Archive::Zip qw( :ERROR_CODES );
 use YAML ();

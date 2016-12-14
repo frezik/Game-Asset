@@ -21,13 +21,56 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 # POSSIBILITY OF SUCH DAMAGE.
-use Test::More tests => 6;
+package Game::Asset::MultiExample;
+
 use strict;
 use warnings;
+use Moose;
+use namespace::autoclean;
+use Game::Asset::PlainText;
+use Game::Asset::Null;
 
-use_ok( 'Game::Asset::Null' );
-use_ok( 'Game::Asset::PerlModule' );
-use_ok( 'Game::Asset::PlainText' );
-use_ok( 'Game::Asset::YAML' );
-use_ok( 'Game::Asset::MultiExample' );
-use_ok( 'Game::Asset' );
+
+use constant type => 'multi_example';
+
+with 'Game::Asset::Multi';
+
+has 'txt' => (
+    is => 'ro',
+    isa => 'Game::Asset::PlainText',
+    writer => '_set_txt',
+);
+has 'null' => (
+    is => 'ro',
+    isa => 'Game::Asset::Null',
+    writer => '_set_null',
+);
+
+
+sub content { $_[0]->_orig_content }
+
+sub _process_content
+{
+    my ($self, $content) = @_;
+    $self->_orig_content( $content );
+
+    my $args = {
+        name => $self->name,
+        full_name => $self->full_name,
+    };
+
+    my $txt = Game::Asset::PlainText->new( $args );
+    my $null = Game::Asset::Null->new( $args );
+    $_->process_content( $content ) for $txt, $null;
+
+    $self->_set_txt( $txt );
+    $self->_set_null( $null );
+    return;
+}
+
+
+no Moose;
+__PACKAGE__->meta->make_immutable;
+1;
+__END__
+

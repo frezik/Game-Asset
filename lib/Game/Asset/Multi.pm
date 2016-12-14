@@ -21,13 +21,15 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 # POSSIBILITY OF SUCH DAMAGE.
-use Test::More tests => 6;
+package Game::Asset::Multi;
+
 use strict;
 use warnings;
+use Moose::Role;
 
-use_ok( 'Game::Asset::Null' );
-use_ok( 'Game::Asset::PerlModule' );
-use_ok( 'Game::Asset::PlainText' );
-use_ok( 'Game::Asset::YAML' );
-use_ok( 'Game::Asset::MultiExample' );
-use_ok( 'Game::Asset' );
+with 'Game::Asset::Type';
+
+
+1;
+__END__
+

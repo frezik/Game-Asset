@@ -21,13 +21,20 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 # POSSIBILITY OF SUCH DAMAGE.
-use Test::More tests => 6;
+use Test::More tests => 4;
 use strict;
 use warnings;
+use Game::Asset;
 
-use_ok( 'Game::Asset::Null' );
-use_ok( 'Game::Asset::PerlModule' );
-use_ok( 'Game::Asset::PlainText' );
-use_ok( 'Game::Asset::YAML' );
-use_ok( 'Game::Asset::MultiExample' );
-use_ok( 'Game::Asset' );
+
+my $asset = Game::Asset->new({
+    file => 't_data/test1.zip',
+});
+
+my $qux = $asset->get_by_name( 'qux' );
+isa_ok( $qux => 'Game::Asset::MultiExample' );
+
+isa_ok( $qux->txt => 'Game::Asset::PlainText' );
+isa_ok( $qux->null => 'Game::Asset::Null' );
+
+cmp_ok( $qux->txt->content, 'eq', "Hello, world!\n", "Got content" );
