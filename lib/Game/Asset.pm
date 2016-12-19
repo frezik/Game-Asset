@@ -225,6 +225,14 @@ The following mappings are always available without being in the index file:
 
 =back
 
+=head2 Multi-mappings
+
+There are times when the given content should be processed by more than one 
+mapping. For instance, a game may want to process a L<Graphics::GVG> vector 
+in both OpenGL and Chipmunk (physics library).
+
+This is what multi-mappings are for. See L<Game::Asset::Multi> for details.
+
 =head1 ATTRIBUTES
 
 =head2 file

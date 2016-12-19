@@ -33,3 +33,23 @@ with 'Game::Asset::Type';
 1;
 __END__
 
+
+=head1 NAME
+
+  Game::Asset::Multi - A mapping type that maps to multiple other types
+
+=head1 DESCRIPTION
+
+A game asset may want to be processed in multiple ways. For example, a 
+L<Graphics::GVG> vector may want both OpenGL and Chipmunk (physics library) 
+representations.
+
+This role should be done by any type that wishes to process a single piece of 
+content into multiple sub-types. The C<_process_content()> for the multitype 
+should pass the content along to each of the sub-types.
+
+See L<Game::Asset::MultiExample> for example code.
+
+This role does L<Game::Asset::Type>.
+
+=cut
