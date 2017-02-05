@@ -152,8 +152,9 @@ sub _build_entries
     my (@entries, %entries_by_shortname);
     foreach my $member ($zip->memberNames) {
         next if $member eq 'index.yml'; # Ignore index
+        next if $member =~ m!\/ \z!x;
         my ($short_name, $ext) = $member =~ /\A (.*) \. (.*?) \z/x;
-        die "Could not find mapping for '$ext'\n"
+        die "Could not find mapping for '$ext' (full name: $member)\n"
             if ! exists $mappings{$ext};
 
         my $entry_class = $mappings{$ext};
